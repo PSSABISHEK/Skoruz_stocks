@@ -10,7 +10,7 @@ class graph extends Component {
     let width = svgWidth - margin.left - margin.right;
     let height = svgHeight - margin.top - margin.bottom;
     let svg = d3
-      .select("svg")
+      .select("#sg")
       .attr("width", svgWidth)
       .attr("height", svgHeight);
     let g = svg
@@ -21,14 +21,14 @@ class graph extends Component {
     let line = d3
       .line()
       .x(function(d) {
-        return x(d.date);
+        return x(d.time);
       })
       .y(function(d) {
         return y(d.value);
       });
     x.domain(
       d3.extent(data, function(d) {
-        return d.date;
+        return d.time;
       })
     );
     y.domain(
@@ -49,7 +49,7 @@ class graph extends Component {
       .attr("y", 6)
       .attr("dy", "0.71em")
       .attr("text-anchor", "end")
-      .text("Price ($)");
+      .text("High");
     g.append("path")
       .datum(data)
       .attr("fill", "none")
@@ -58,7 +58,6 @@ class graph extends Component {
       .attr("stroke-linecap", "round")
       .attr("stroke-width", 1.5)
       .attr("d", line);
-    return <svg />;
   }
 
   render() {
@@ -67,6 +66,7 @@ class graph extends Component {
       <div>
         <br />
         <br />
+        <svg id="sg" />
       </div>
     );
   }

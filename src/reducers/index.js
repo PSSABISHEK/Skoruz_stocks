@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import info from './reducers_info'
+import info from "./reducers_info";
 
-const rootReducer = combineReducers ({
-    info
+const rootReducer = combineReducers({
+  info
 });
 
 //console.log(info);
