@@ -3,11 +3,6 @@ import * as d3 from "d3";
 import { connect } from "react-redux";
 
 class graph extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (this.props.info !== nextProps.info) console.log("Not equal");
-    else console.log("equal");
-  }
-
   drawChart(data) {
     let svgWidth = 600,
       svgHeight = 400;
@@ -21,7 +16,7 @@ class graph extends Component {
     let g = svg
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    let x = d3.scaleTime().rangeRound([0, width]);
+    let x = d3.scaleLinear().rangeRound([0, width]);
     let y = d3.scaleLinear().rangeRound([height, 0]);
     let line = d3
       .line()
@@ -44,17 +39,25 @@ class graph extends Component {
     g.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x))
-      .select(".domain")
-      .remove();
+      .select(".domain")    
+      .append("text")
+      .attr("fill", "#000")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 1)
+      .attr("dy", "0.71em")
+      .attr("text-anchor", "end")
+      .text("Time");
+
     g.append("g")
       .call(d3.axisLeft(y))
       .append("text")
       .attr("fill", "#000")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
+      .attr("transform", "rotate(+90)")
+      .attr("y", 1)
       .attr("dy", "0.71em")
       .attr("text-anchor", "end")
       .text("High");
+
     g.append("path")
       .datum(data)
       .attr("fill", "none")
