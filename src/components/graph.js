@@ -3,6 +3,11 @@ import * as d3 from "d3";
 import { connect } from "react-redux";
 
 class graph extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.info !== nextProps.info) console.log("Not equal");
+    else console.log("equal");
+  }
+
   drawChart(data) {
     let svgWidth = 600,
       svgHeight = 400;

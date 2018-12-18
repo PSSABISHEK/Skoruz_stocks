@@ -7,13 +7,19 @@ import { connect } from "react-redux";
 const options = [
   { value: "FB", label: "Facebook Inc." },
   { value: "MSFT", label: "Microsoft Corporation" },
-  { value: "AAPL", label: "Apple Inc." }
+  { value: "AAPL", label: "Apple Inc." },
+  { value: "BAC", label: "Bank of America Corperation" },
+  { value: "TTM", label: "Tata Motors Limited" }
 ];
 
 class Searchcomp extends Component {
-  state = {
-    selectedOption: ""
-  };
+  constructor(props) {
+    super(props);
+    this.props.dispatch(fetchinfo("FB"));
+    this.state = {
+      selectedOption: { value: "FB", label: "Facebook Inc." }
+    };
+  }
 
   handleChange = selectedOption => {
     this.setState({
@@ -38,7 +44,7 @@ class Searchcomp extends Component {
           </div>
         </div>
         <br />
-        <br />
+        <h1>{this.state.selectedOption.label}</h1>
         <br />
       </div>
     );

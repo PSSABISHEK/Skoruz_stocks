@@ -17,7 +17,6 @@ export function fetchinfo(selectedOption) {
       .catch(error => console.log(error));
   };
 }
-
 export function loadinfo(results) {
   return {
     type: "COMPANY_FETCH",
