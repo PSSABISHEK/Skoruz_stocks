@@ -15,7 +15,7 @@ const options = [
 class Searchcomp extends Component {
   constructor(props) {
     super(props);
-    this.props.dispatch(fetchinfo("FB"));
+    //this.props.dispatch(fetchinfo("FB"));
     this.state = {
       selectedOption: { value: "FB", label: "Facebook Inc." }
     };

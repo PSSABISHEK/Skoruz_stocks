@@ -7,6 +7,7 @@ class graph extends Component {
     let svgWidth = 600,
       svgHeight = 400;
     let margin = { top: 20, right: 20, bottom: 30, left: 50 };
+    let parseDate = d3.timeParse("%Y-%m-%d %H:%M:%S");
     let width = svgWidth - margin.left - margin.right;
     let height = svgHeight - margin.top - margin.bottom;
     let svg = d3
@@ -16,8 +17,13 @@ class graph extends Component {
     let g = svg
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    let x = d3.scaleLinear().rangeRound([0, width]);
-    let y = d3.scaleLinear().rangeRound([height, 0]);
+    let x = d3.scaleTime().range([0, width]);
+    let y = d3.scaleLinear().range([height, 0]);
+    let xAxis = d3
+      .axisBottom(x)
+      .tickFormat(d3.timeFormat("%H:%M"))
+      .tickArguments([d3.timeMinute.every(10)]);
+    let yAxis = d3.axisLeft(y);
     let line = d3
       .line()
       .x(function(d) {
@@ -26,6 +32,10 @@ class graph extends Component {
       .y(function(d) {
         return y(d.value);
       });
+    data.forEach(function(d) {
+      d.time = parseDate(d.time);
+      d.value = +d.value;
+    });
     x.domain(
       d3.extent(data, function(d) {
         return d.time;
@@ -38,8 +48,8 @@ class graph extends Component {
     );
     g.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x))
-      .select(".domain")    
+      .call(xAxis)
+      .select(".domain")
       .append("text")
       .attr("fill", "#000")
       .attr("transform", "rotate(-90)")
@@ -49,7 +59,7 @@ class graph extends Component {
       .text("Time");
 
     g.append("g")
-      .call(d3.axisLeft(y))
+      .call(yAxis)
       .append("text")
       .attr("fill", "#000")
       .attr("transform", "rotate(+90)")
@@ -67,12 +77,10 @@ class graph extends Component {
       .attr("stroke-width", 1.5)
       .attr("d", line);
   }
-
   render() {
     if (this.props.info.length > 0) this.drawChart(this.props.info);
     return (
       <div>
-        <br />
         <br />
         <svg id="sg" />
       </div>

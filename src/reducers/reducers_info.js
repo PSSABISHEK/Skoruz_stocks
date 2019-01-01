@@ -7,7 +7,7 @@ const info = (state = [], action) => {
       const b = [];
       for (let key in arr["Time Series (1min)"]) {
         b.push({
-          time: key.slice(11, 16).replace(":", "."),
+          time: key,
           value: arr["Time Series (1min)"][key]["1. open"]
         });
       }
