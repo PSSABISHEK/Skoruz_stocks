@@ -10,6 +10,7 @@ class graph extends Component {
     let parseDate = d3.timeParse("%Y-%m-%d %H:%M:%S");
     let width = svgWidth - margin.left - margin.right;
     let height = svgHeight - margin.top - margin.bottom;
+    d3.select("g").remove();
     let svg = d3
       .select("#sg")
       .attr("width", svgWidth)
@@ -22,7 +23,7 @@ class graph extends Component {
     let xAxis = d3
       .axisBottom(x)
       .tickFormat(d3.timeFormat("%H:%M"))
-      .tickArguments([d3.timeMinute.every(10)]);
+      .tickArguments([d3.timeMinute.every(15)]);
     let yAxis = d3.axisLeft(y);
     let line = d3
       .line()
@@ -52,7 +53,7 @@ class graph extends Component {
       .select(".domain")
       .append("text")
       .attr("fill", "#000")
-      .attr("transform", "rotate(-90)")
+      .attr("transform", "rotate(+90)")
       .attr("y", 1)
       .attr("dy", "0.71em")
       .attr("text-anchor", "end")
